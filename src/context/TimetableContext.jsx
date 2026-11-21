@@ -49,7 +49,7 @@ const DEFAULT_SCHEDULES = [
     classroom: DEFAULT_CLASSROOMS[2],
     course: DEFAULT_COURSES[1],
     section: DEFAULT_SECTIONS[1],
-    timeSlot: { dayOfWeek: 'Monday', startTime: '11:00', endTime: '12:30' },
+    timeSlot: { dayOfWeek: 'Monday', startTime: '10:30', endTime: '12:00' },
     academicTerm: 'Fall 2026'
   },
   {
@@ -58,7 +58,16 @@ const DEFAULT_SCHEDULES = [
     classroom: DEFAULT_CLASSROOMS[1],
     course: DEFAULT_COURSES[3],
     section: DEFAULT_SECTIONS[2],
-    timeSlot: { dayOfWeek: 'Tuesday', startTime: '10:00', endTime: '11:30' },
+    timeSlot: { dayOfWeek: 'Tuesday', startTime: '10:30', endTime: '12:00' },
+    academicTerm: 'Fall 2026'
+  },
+  {
+    id: 4,
+    teacher: DEFAULT_TEACHERS[3],
+    classroom: DEFAULT_CLASSROOMS[3],
+    course: DEFAULT_COURSES[2],
+    section: DEFAULT_SECTIONS[0],
+    timeSlot: { dayOfWeek: 'Wednesday', startTime: '13:30', endTime: '15:00' },
     academicTerm: 'Fall 2026'
   }
 ];
@@ -194,9 +203,9 @@ export function TimetableProvider({ children }) {
   };
 
   // Add new schedule
-  const addSchedule = async (newEntry) => {
+  const addSchedule = async (newEntry, force = false) => {
     const conflicts = validateCandidate(newEntry);
-    if (conflicts.length > 0) {
+    if (conflicts.length > 0 && !force) {
       toast.error('Cannot save: Timetable conflict detected!');
       return { success: false, conflicts };
     }
@@ -227,8 +236,10 @@ export function TimetableProvider({ children }) {
           return { success: true };
         } else {
           const err = await res.json();
-          toast.error(err.error || 'Server rejected due to conflict');
-          return { success: false, conflicts: err.conflicts || [] };
+          if (!force) {
+            toast.error(err.error || 'Server rejected due to conflict');
+            return { success: false, conflicts: err.conflicts || [] };
+          }
         }
       } catch (e) {
         console.warn('Backend offline, saving locally');
@@ -237,9 +248,37 @@ export function TimetableProvider({ children }) {
 
     // Persist locally
     const entryWithId = { ...newEntry, id: Date.now() };
-    setSchedules(prev => [...prev, entryWithId]);
-    toast.success('Lecture scheduled with 0 conflicts!');
+    setSchedules(prev => {
+      const updated = [...prev, entryWithId];
+      localStorage.setItem('chrono_schedules', JSON.stringify(updated));
+      return updated;
+    });
+    if (force) {
+      toast.warn('⚠️ Schedule force-committed: Conflict is now active in Audit Center!');
+    } else {
+      toast.success('Lecture scheduled with 0 conflicts!');
+    }
     return { success: true };
+  };
+
+  // Inject a simulated conflict test case for demonstration/testing
+  const injectConflictTestCase = () => {
+    const testClash = {
+      id: Date.now(),
+      teacher: DEFAULT_TEACHERS[0], // Dr. Alan Turing (already teaching CS101 in LH-101 at 09:00 - 10:30)
+      classroom: DEFAULT_CLASSROOMS[0], // Room LH-101 (already booked)
+      course: DEFAULT_COURSES[1], // CS202 Database Systems
+      section: DEFAULT_SECTIONS[1], // Section CS-B
+      timeSlot: { dayOfWeek: 'Monday', startTime: '09:00', endTime: '10:30' },
+      academicTerm: 'Fall 2026'
+    };
+
+    setSchedules(prev => {
+      const updated = [...prev, testClash];
+      localStorage.setItem('chrono_schedules', JSON.stringify(updated));
+      return updated;
+    });
+    toast.warn('⚠️ Conflict Test Case Injected: Double-booking created on Monday 09:00 – 10:30!');
   };
 
   // Delete schedule — PERSISTS IN LOCALSTORAGE
@@ -319,6 +358,7 @@ export function TimetableProvider({ children }) {
       sections, setSections,
       schedules, setSchedules,
       addSchedule, deleteSchedule, resetToDefault,
+      injectConflictTestCase,
       validateCandidate, auditAllConflicts,
       isBackendConnected,
       isSidebarOpen, setIsSidebarOpen

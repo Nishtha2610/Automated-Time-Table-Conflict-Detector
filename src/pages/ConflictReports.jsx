@@ -10,13 +10,15 @@ import {
   FaCalendarAlt,
   FaMapMarkerAlt,
   FaUserTie,
-  FaUsers
+  FaUsers,
+  FaBolt,
+  FaUndo
 } from 'react-icons/fa';
 import { useTimetable } from '../context/TimetableContext';
 import { Link } from 'react-router-dom';
 
 export default function ConflictReports() {
-  const { auditAllConflicts, deleteSchedule, schedules } = useTimetable();
+  const { auditAllConflicts, deleteSchedule, schedules, injectConflictTestCase, resetToDefault } = useTimetable();
   const conflicts = auditAllConflicts();
 
   return (
@@ -25,6 +27,13 @@ export default function ConflictReports() {
         <div>
           <h1 className="page-title">Timetable Conflict Audit Center</h1>
           <p className="page-subtitle">Detailed conflict logs, interval-overlap diagnostics, and algorithm recommendations</p>
+        </div>
+        <div className="header-action-group">
+          {conflicts.length > 0 && (
+            <button className="btn-glass-secondary" onClick={resetToDefault} title="Restore verified conflict-free state">
+              <FaUndo /> Resolve All & Reset
+            </button>
+          )}
         </div>
       </div>
 
@@ -43,9 +52,25 @@ export default function ConflictReports() {
               <span className="clean-stat-chip"><FaCheckCircle /> Zero Classroom Clashes</span>
               <span className="clean-stat-chip"><FaCheckCircle /> Zero Cohort Overlaps</span>
             </div>
-            <Link to="/builder" className="btn-action-primary">
-              <FaCalendarAlt /> Schedule Another Lecture <FaArrowRight />
-            </Link>
+
+            {/* Interactive Test Case Trigger */}
+            <div style={{ marginTop: '24px', padding: '16px', borderRadius: '12px', background: 'rgba(255, 255, 255, 0.03)', border: '1px solid rgba(255, 255, 255, 0.08)', maxWidth: '520px', marginInline: 'auto' }}>
+              <p style={{ fontSize: '0.9rem', color: '#94a3b8', marginBottom: '12px' }}>
+                🧪 <strong>Want to test the Conflict Engine?</strong> Click below to inject a simulated double-booking clash and watch the top pill and diagnostic cards activate in real-time!
+              </p>
+              <div style={{ display: 'flex', gap: '12px', justifyContent: 'center', flexWrap: 'wrap' }}>
+                <button 
+                  className="btn-glow-primary" 
+                  onClick={injectConflictTestCase}
+                  style={{ background: 'linear-gradient(135deg, #f59e0b, #d97706)', borderColor: '#fbbf24' }}
+                >
+                  <FaBolt /> Inject Conflict Test Case
+                </button>
+                <Link to="/builder" className="btn-glass-secondary">
+                  <FaCalendarAlt /> Schedule Manually
+                </Link>
+              </div>
+            </div>
           </div>
         </div>
       ) : (

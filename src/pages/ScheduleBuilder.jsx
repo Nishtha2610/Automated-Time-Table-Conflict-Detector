@@ -195,7 +195,7 @@ export default function ScheduleBuilder() {
             </div>
 
             {/* Action Button */}
-            <div className="form-action-container">
+            <div className="form-action-container" style={{ display: 'flex', gap: '12px', flexWrap: 'wrap' }}>
               <button 
                 type="submit" 
                 className={`btn-action-primary ${hasConflict ? 'btn-action-disabled' : ''}`}
@@ -204,6 +204,23 @@ export default function ScheduleBuilder() {
                 <span>{hasConflict ? '⚠️ Resolve Conflicts to Save' : 'Confirm & Commit Schedule'}</span>
                 <FaArrowRight />
               </button>
+
+              {hasConflict && (
+                <button
+                  type="button"
+                  className="btn-glass-secondary"
+                  style={{ borderColor: '#f59e0b', color: '#fbbf24' }}
+                  onClick={async () => {
+                    const res = await addSchedule(candidate, true);
+                    if (res.success) {
+                      navigate('/conflicts');
+                    }
+                  }}
+                  title="Simulate this conflict in the database and inspect it in the Audit Center"
+                >
+                  ⚡ Force Save (Test Conflict Audit)
+                </button>
+              )}
             </div>
           </form>
         </div>
