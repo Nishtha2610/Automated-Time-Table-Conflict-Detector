@@ -16,6 +16,25 @@ export default function Sidebar() {
 
   return (
     <aside className={`sidebar-container ${isSidebarOpen ? 'expanded' : 'collapsed'}`}>
+      {isSidebarOpen && (
+        <div className="sidebar-brand-box">
+          <div className="sidebar-brand-logo-wrap" title="SMS — Schedule Manager System">
+            <img 
+              src="/sms-logo.jpg" 
+              alt="SMS 3D Brand Logo" 
+              className="sidebar-brand-img animated-logo-pulse" 
+            />
+          </div>
+          <div className="sidebar-brand-info">
+            <div className="sidebar-brand-title-row">
+              <span className="sidebar-brand-title">SMS</span>
+              <span className="sidebar-edition-pill">PRO</span>
+            </div>
+            <span className="sidebar-brand-tag">TIMETABLE MANAGER</span>
+          </div>
+        </div>
+      )}
+
       <nav className="sidebar-nav">
         <div className="nav-section-title">{isSidebarOpen && 'MAIN NAVIGATION'}</div>
 

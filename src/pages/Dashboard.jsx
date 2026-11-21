@@ -20,7 +20,7 @@ export default function Dashboard() {
 
   return (
     <div className="page-wrapper">
-      {/* Primary SMS Hero Banner Section */}
+      {/* Primary SMS Hero Banner Section (Exact Match to User Visual) */}
       <section className="sms-hero-section">
         <div className="sms-banner-container">
           {/* Main Hero Banner Visual */}
@@ -30,68 +30,48 @@ export default function Dashboard() {
               alt="SMS - Schedule Manager System Banner" 
               className="sms-banner-image"
             />
-            <div className="sms-banner-ambient-glow"></div>
             
-            {/* Functional Interactive Layer overlaying the Banner Image */}
+            {/* Functional Invisible Interactive Hotspot Layer */}
             <div className="sms-banner-interactive-overlay">
-              {/* Functional 'Get Started ->' Button positioned precisely over the banner button */}
+              {/* 1. Functional 'Get Started ->' Button Hotspot (Directly over the banner's capsule button) */}
               <Link 
                 to="/builder" 
-                className="banner-functional-get-started-btn"
+                className="banner-hotspot-get-started"
                 title="Get Started — Create Conflict-Free Schedule"
-              >
-                <span className="btn-text">Get Started</span>
-                <span className="btn-arrow">&rarr;</span>
-              </Link>
+                aria-label="Get Started"
+              />
 
-              {/* Functional Hotspots for the 5 Features at the bottom of the banner */}
-              <div className="banner-hotspots-container">
-                <Link to="/resources" className="banner-feature-hotspot" title="Manage Teachers Directory">
-                  <span className="hotspot-pulse"></span>
-                  <span className="hotspot-label">Manage Teachers</span>
-                </Link>
-                <Link to="/resources" className="banner-feature-hotspot" title="Manage Curriculum Courses">
-                  <span className="hotspot-pulse"></span>
-                  <span className="hotspot-label">Manage Courses</span>
-                </Link>
-                <Link to="/resources" className="banner-feature-hotspot" title="Manage Classrooms & Venues">
-                  <span className="hotspot-pulse"></span>
-                  <span className="hotspot-label">Manage Classrooms</span>
-                </Link>
-                <Link to="/builder" className="banner-feature-hotspot" title="Create New Timetable Schedules">
-                  <span className="hotspot-pulse"></span>
-                  <span className="hotspot-label">Create Timetables</span>
-                </Link>
-                <Link to="/conflicts" className="banner-feature-hotspot" title="Detect & Resolve Schedule Conflicts">
-                  <span className="hotspot-pulse"></span>
-                  <span className="hotspot-label">Detect Conflicts</span>
-                </Link>
-              </div>
-            </div>
-          </div>
-
-          {/* Quick Real-Time Status & Action Strip */}
-          <div className="sms-banner-substrip">
-            <div className="substrip-left">
-              <div className={`health-pill ${conflicts.length > 0 ? 'alert' : 'safe'}`}>
-                {conflicts.length > 0 ? <FaExclamationTriangle /> : <FaShieldAlt />}
-                <span>
-                  {conflicts.length > 0 
-                    ? `${conflicts.length} Active Collision${conflicts.length > 1 ? 's' : ''} Detected` 
-                    : '100% Conflict Free — Real-Time Java Engine Active'}
-                </span>
-              </div>
-            </div>
-            <div className="substrip-actions">
-              <Link to="/matrix" className="btn-metallic-secondary">
-                <FaCalendarCheck /> View Weekly Timetable
-              </Link>
-              <Link to="/conflicts" className="btn-metallic-secondary">
-                <FaExclamationTriangle /> Conflict Audit ({conflicts.length})
-              </Link>
-              <Link to="/builder" className="btn-metallic-primary">
-                <FaArrowRight /> Launch Schedule Builder
-              </Link>
+              {/* 2. Hotspots for the 5 Feature Badges on the Banner */}
+              <Link 
+                to="/resources" 
+                className="banner-hotspot-item hotspot-teachers"
+                title="Manage Teachers Directory"
+                aria-label="Manage Teachers"
+              />
+              <Link 
+                to="/resources" 
+                className="banner-hotspot-item hotspot-courses"
+                title="Manage Curriculum Courses"
+                aria-label="Manage Courses"
+              />
+              <Link 
+                to="/resources" 
+                className="banner-hotspot-item hotspot-classrooms"
+                title="Manage Classrooms & Labs"
+                aria-label="Manage Classrooms"
+              />
+              <Link 
+                to="/builder" 
+                className="banner-hotspot-item hotspot-timetables"
+                title="Create Timetables"
+                aria-label="Create Timetables"
+              />
+              <Link 
+                to="/conflicts" 
+                className="banner-hotspot-item hotspot-conflicts"
+                title="Detect & Resolve Conflicts"
+                aria-label="Detect Conflicts"
+              />
             </div>
           </div>
         </div>
