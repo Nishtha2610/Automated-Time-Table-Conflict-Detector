@@ -5,8 +5,7 @@ import {
   FaCalendarWeek, 
   FaPlusSquare, 
   FaExclamationCircle, 
-  FaUsersCog,
-  FaGraduationCap
+  FaUsersCog
 } from 'react-icons/fa';
 import { useTimetable } from '../context/TimetableContext';
 
@@ -68,17 +67,6 @@ export default function Sidebar() {
           <span>Resource Manager</span>
         </NavLink>
       </nav>
-
-      {/* Footer Info Card */}
-      <div className="sidebar-footer-card">
-        <div className="telemetry-header">
-          <div className="telemetry-title">
-            <FaGraduationCap /> Academic Project
-          </div>
-          <div className="telemetry-status-dot online"></div>
-        </div>
-        <p className="footer-text">Core Java Engine • Interval Overlap • MySQL</p>
-      </div>
     </aside>
   );
 }
