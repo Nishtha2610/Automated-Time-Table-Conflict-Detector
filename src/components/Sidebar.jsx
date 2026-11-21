@@ -29,7 +29,6 @@ export default function Sidebar() {
         <div className="brand-text">
           <div className="brand-title-row">
             <span className="brand-title">SMS</span>
-            <span className="brand-edition-tag">PRO</span>
           </div>
           <span className="brand-subtitle">Plan • Detect • Organize</span>
         </div>
