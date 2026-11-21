@@ -20,46 +20,78 @@ export default function Dashboard() {
 
   return (
     <div className="page-wrapper">
-      {/* Hero Section */}
-      <section className="hero-card">
-        <div className="hero-main-content">
-          <div className="hero-badge">
-            <FaLayerGroup className="badge-sparkle" />
-            <span>Academic Timetable Management Platform</span>
-          </div>
-          <h1 className="hero-heading">
-            Automated Conflict <span className="gradient-text">Detection Engine</span>
-          </h1>
-          <p className="hero-description">
-            Eliminate lecture collisions and scheduling errors before publication. Powered by Core Java
-            interval-overlap logic, the system monitors teacher double-bookings, classroom clashes,
-            cohort overlaps, and room capacity limits in real time.
-          </p>
-          <div className="hero-cta-group">
-            <Link to="/builder" className="btn-glow-primary">
-              <FaCalendarCheck /> Create Schedule
-            </Link>
-            <Link to="/matrix" className="btn-glass-secondary">
-              Master Weekly Grid <FaArrowRight />
-            </Link>
-          </div>
-        </div>
+      {/* Primary SMS Hero Banner Section */}
+      <section className="sms-hero-section">
+        <div className="sms-banner-container">
+          {/* Main Hero Banner Visual */}
+          <div className="sms-banner-art-wrapper">
+            <img 
+              src="/hero-banner.jpg" 
+              alt="SMS - Schedule Manager System Banner" 
+              className="sms-banner-image"
+            />
+            <div className="sms-banner-ambient-glow"></div>
+            
+            {/* Functional Interactive Layer overlaying the Banner Image */}
+            <div className="sms-banner-interactive-overlay">
+              {/* Functional 'Get Started ->' Button positioned precisely over the banner button */}
+              <Link 
+                to="/builder" 
+                className="banner-functional-get-started-btn"
+                title="Get Started — Create Conflict-Free Schedule"
+              >
+                <span className="btn-text">Get Started</span>
+                <span className="btn-arrow">&rarr;</span>
+              </Link>
 
-        <div className="hero-status-widget">
-          <div className={`system-health-card ${conflicts.length > 0 ? 'health-danger' : 'health-success'}`}>
-            <div className="health-icon-wrap">
-              {conflicts.length > 0 ? <FaExclamationTriangle /> : <FaShieldAlt />}
+              {/* Functional Hotspots for the 5 Features at the bottom of the banner */}
+              <div className="banner-hotspots-container">
+                <Link to="/resources" className="banner-feature-hotspot" title="Manage Teachers Directory">
+                  <span className="hotspot-pulse"></span>
+                  <span className="hotspot-label">Manage Teachers</span>
+                </Link>
+                <Link to="/resources" className="banner-feature-hotspot" title="Manage Curriculum Courses">
+                  <span className="hotspot-pulse"></span>
+                  <span className="hotspot-label">Manage Courses</span>
+                </Link>
+                <Link to="/resources" className="banner-feature-hotspot" title="Manage Classrooms & Venues">
+                  <span className="hotspot-pulse"></span>
+                  <span className="hotspot-label">Manage Classrooms</span>
+                </Link>
+                <Link to="/builder" className="banner-feature-hotspot" title="Create New Timetable Schedules">
+                  <span className="hotspot-pulse"></span>
+                  <span className="hotspot-label">Create Timetables</span>
+                </Link>
+                <Link to="/conflicts" className="banner-feature-hotspot" title="Detect & Resolve Schedule Conflicts">
+                  <span className="hotspot-pulse"></span>
+                  <span className="hotspot-label">Detect Conflicts</span>
+                </Link>
+              </div>
             </div>
-            <div className="health-info-wrap">
-              <span className="health-tag">System Health Status</span>
-              <h3 className="health-title">
-                {conflicts.length > 0 ? `${conflicts.length} Active Collision${conflicts.length > 1 ? 's' : ''}` : '100% Conflict Free'}
-              </h3>
-              <p className="health-desc">
-                {conflicts.length > 0 
-                  ? 'Resolve resource overlaps before publishing' 
-                  : 'All scheduled sessions satisfy interval and room constraints'}
-              </p>
+          </div>
+
+          {/* Quick Real-Time Status & Action Strip */}
+          <div className="sms-banner-substrip">
+            <div className="substrip-left">
+              <div className={`health-pill ${conflicts.length > 0 ? 'alert' : 'safe'}`}>
+                {conflicts.length > 0 ? <FaExclamationTriangle /> : <FaShieldAlt />}
+                <span>
+                  {conflicts.length > 0 
+                    ? `${conflicts.length} Active Collision${conflicts.length > 1 ? 's' : ''} Detected` 
+                    : '100% Conflict Free — Real-Time Java Engine Active'}
+                </span>
+              </div>
+            </div>
+            <div className="substrip-actions">
+              <Link to="/matrix" className="btn-metallic-secondary">
+                <FaCalendarCheck /> View Weekly Timetable
+              </Link>
+              <Link to="/conflicts" className="btn-metallic-secondary">
+                <FaExclamationTriangle /> Conflict Audit ({conflicts.length})
+              </Link>
+              <Link to="/builder" className="btn-metallic-primary">
+                <FaArrowRight /> Launch Schedule Builder
+              </Link>
             </div>
           </div>
         </div>

@@ -25,13 +25,22 @@ export default function Navbar() {
           <FaBars />
         </button>
 
-        <Link to="/" className="navbar-brand">
-          <div className="brand-icon-box">
-            <FaCalendarAlt className="brand-icon" />
+        <Link to="/" className="navbar-brand" title="SMS — Schedule Manager System">
+          <div className="brand-logo-container">
+            <img 
+              src="/sms-logo.jpg" 
+              alt="SMS Logo" 
+              className="navbar-brand-logo" 
+            />
+            <div className="logo-ambient-halo"></div>
           </div>
           <div className="brand-text-group">
-            <span className="brand-title">ChronoScheduler</span>
-            <span className="brand-subtitle">Automated Conflict Detector</span>
+            <div className="brand-title-row">
+              <span className="brand-title-sms">SMS</span>
+              <span className="brand-title-divider">|</span>
+              <span className="brand-title">Schedule Manager System</span>
+            </div>
+            <span className="brand-subtitle">PLAN • ASSIGN • DETECT • ORGANIZE</span>
           </div>
         </Link>
       </div>
