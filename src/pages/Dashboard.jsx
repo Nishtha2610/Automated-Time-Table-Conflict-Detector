@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { 
   FaChalkboardTeacher, 
   FaDoorOpen, 
@@ -8,136 +8,148 @@ import {
   FaShieldAlt, 
   FaExclamationTriangle,
   FaCalendarCheck,
-  FaArrowRight,
-  FaCheckCircle,
-  FaLayerGroup
+  FaCalendarPlus,
+  FaCalendarAlt,
+  FaCheckCircle
 } from 'react-icons/fa';
 import { useTimetable } from '../context/TimetableContext';
 
 export default function Dashboard() {
+  const navigate = useNavigate();
   const { teachers, classrooms, courses, sections, schedules, auditAllConflicts } = useTimetable();
   const conflicts = auditAllConflicts();
 
   return (
-    <div className="page-wrapper">
-      {/* Primary SMS Hero Banner Section (Exact Match to User Visual) */}
-      <section className="sms-hero-section">
-        <div className="sms-banner-container">
-          {/* Main Hero Banner Visual */}
-          <div className="sms-banner-art-wrapper">
-            <img 
-              src="/hero-banner.jpg" 
-              alt="SMS - Schedule Manager System Banner" 
-              className="sms-banner-image"
-            />
-            
-            {/* Functional Invisible Interactive Hotspot Layer */}
-            <div className="sms-banner-interactive-overlay">
-              {/* 1. Functional 'Get Started ->' Button Hotspot (Directly over the banner's capsule button) */}
-              <Link 
-                to="/builder" 
-                className="banner-hotspot-get-started"
-                title="Get Started — Create Conflict-Free Schedule"
-                aria-label="Get Started"
-              />
-
-              {/* 2. Hotspots for the 5 Feature Badges on the Banner */}
-              <Link 
-                to="/resources" 
-                className="banner-hotspot-item hotspot-teachers"
-                title="Manage Teachers Directory"
-                aria-label="Manage Teachers"
-              />
-              <Link 
-                to="/resources" 
-                className="banner-hotspot-item hotspot-courses"
-                title="Manage Curriculum Courses"
-                aria-label="Manage Courses"
-              />
-              <Link 
-                to="/resources" 
-                className="banner-hotspot-item hotspot-classrooms"
-                title="Manage Classrooms & Labs"
-                aria-label="Manage Classrooms"
-              />
-              <Link 
-                to="/builder" 
-                className="banner-hotspot-item hotspot-timetables"
-                title="Create Timetables"
-                aria-label="Create Timetables"
-              />
-              <Link 
-                to="/conflicts" 
-                className="banner-hotspot-item hotspot-conflicts"
-                title="Detect & Resolve Conflicts"
-                aria-label="Detect Conflicts"
-              />
-            </div>
+    <div className="dashboard-container">
+      {/* Official Hero Banner - Matching StockPulse reference structure */}
+      <div className="spc-hero-card animated-hero-banner">
+        <div className="spc-hero-content">
+          <div className="hero-top-badge">
+            <FaCalendarCheck />
+            <span>Academic Timetable Management System</span>
           </div>
-        </div>
-      </section>
 
-      {/* KPI Stats Row */}
-      <section className="stats-row">
-        <div className="kpi-card card-blue">
-          <div className="kpi-icon-box">
-            <FaClock />
+          <h1 className="hero-main-title">
+            Plan • Manage • Detect <span className="hero-title-pulse">Conflict-Free Timetables</span>
+          </h1>
+
+          <div className="hero-tagline">
+            PLAN • ASSIGN • DETECT • ORGANIZE
           </div>
-          <div className="kpi-content">
-            <span className="kpi-label">Scheduled Classes</span>
-            <div className="kpi-value">{schedules.length}</div>
-            <span className="kpi-subtext">Active weekly sessions</span>
+
+          <p className="hero-description">
+            A centralized platform to create, manage and optimize class schedules with real-time interval conflict detection.
+          </p>
+
+          <div className="hero-cta-group">
+            <button 
+              className="btn btn-hero-primary" 
+              onClick={() => navigate('/builder')}
+            >
+              <FaCalendarPlus /> Get Started &rarr;
+            </button>
+            <button 
+              className="btn btn-hero-secondary"
+              onClick={() => navigate('/matrix')}
+            >
+              <FaCalendarAlt /> View Master Grid
+            </button>
+          </div>
+
+          {/* 5 Real, Functional Feature Pills */}
+          <div className="hero-features-strip">
+            <Link to="/resources" className="hero-feature-pill">
+              <FaChalkboardTeacher className="text-purple" />
+              <span>Manage Teachers</span>
+            </Link>
+            <Link to="/resources" className="hero-feature-pill">
+              <FaBook className="text-purple" />
+              <span>Manage Courses</span>
+            </Link>
+            <Link to="/resources" className="hero-feature-pill">
+              <FaDoorOpen className="text-purple" />
+              <span>Manage Classrooms</span>
+            </Link>
+            <Link to="/builder" className="hero-feature-pill">
+              <FaCalendarPlus className="text-purple" />
+              <span>Create Timetables</span>
+            </Link>
+            <Link to="/conflicts" className="hero-feature-pill">
+              <FaExclamationTriangle className="text-purple" />
+              <span>Detect Conflicts</span>
+            </Link>
           </div>
         </div>
 
-        <div className="kpi-card card-purple">
-          <div className="kpi-icon-box">
-            <FaChalkboardTeacher />
+        {/* Hero Visual Mockup Preview on the Right */}
+        <div className="spc-hero-visual-pane">
+          <img 
+            src="/hero-banner.jpg" 
+            alt="SMS Schedule Manager System Mockup Preview" 
+            className="hero-laptop-preview"
+          />
+        </div>
+      </div>
+
+      {/* 4 Metric KPI Cards Grid */}
+      <div className="metrics-grid">
+        <div className="metric-card card-blue">
+          <div className="metric-icon-wrap">
+            <FaClock className="metric-icon" />
           </div>
-          <div className="kpi-content">
-            <span className="kpi-label">Faculty Directory</span>
-            <div className="kpi-value">{teachers.length}</div>
-            <span className="kpi-subtext">Registered professors</span>
+          <div className="metric-details">
+            <span className="metric-label">Scheduled Classes</span>
+            <span className="metric-value">{schedules.length}</span>
+            <span className="metric-hint">Active weekly lecture slots</span>
           </div>
         </div>
 
-        <div className="kpi-card card-amber">
-          <div className="kpi-icon-box">
-            <FaDoorOpen />
+        <div className="metric-card card-purple">
+          <div className="metric-icon-wrap">
+            <FaChalkboardTeacher className="metric-icon" />
           </div>
-          <div className="kpi-content">
-            <span className="kpi-label">Classrooms & Labs</span>
-            <div className="kpi-value">{classrooms.length}</div>
-            <span className="kpi-subtext">Venues configured</span>
+          <div className="metric-details">
+            <span className="metric-label">Faculty Directory</span>
+            <span className="metric-value">{teachers.length}</span>
+            <span className="metric-hint">Registered professors</span>
           </div>
         </div>
 
-        <div className="kpi-card card-emerald">
-          <div className="kpi-icon-box">
-            <FaBook />
+        <div className="metric-card card-amber">
+          <div className="metric-icon-wrap">
+            <FaDoorOpen className="metric-icon" />
           </div>
-          <div className="kpi-content">
-            <span className="kpi-label">Curriculum Courses</span>
-            <div className="kpi-value">{courses.length}</div>
-            <span className="kpi-subtext">Active subjects</span>
+          <div className="metric-details">
+            <span className="metric-label">Classrooms & Labs</span>
+            <span className="metric-value">{classrooms.length}</span>
+            <span className="metric-hint">Venues configured</span>
           </div>
         </div>
-      </section>
 
-      {/* Currently Scheduled Sessions Table */}
-      <section className="dashboard-table-card">
-        <div className="table-header-flex">
-          <div>
-            <h2 className="table-heading">Currently Scheduled Lectures</h2>
-            <p className="table-subheading">Validated timetable entries across lecture halls, computer labs, and cohorts</p>
+        <div className="metric-card card-emerald">
+          <div className="metric-icon-wrap">
+            <FaBook className="metric-icon" />
           </div>
-          <Link to="/matrix" className="link-action">
-            Full Weekly Timetable Matrix &rarr;
-          </Link>
+          <div className="metric-details">
+            <span className="metric-label">Curriculum Courses</span>
+            <span className="metric-value">{courses.length}</span>
+            <span className="metric-hint">Active academic subjects</span>
+          </div>
+        </div>
+      </div>
+
+      {/* Currently Scheduled Sessions Table Section */}
+      <div className="column-card">
+        <div className="card-header">
+          <div className="header-title">
+            <FaCalendarCheck className="header-icon text-purple" />
+            <h3>Currently Scheduled Lectures</h3>
+          </div>
+          <Link to="/matrix" className="header-link">Master Weekly Matrix &rarr;</Link>
         </div>
 
-        <div className="responsive-table-wrapper">
-          <table className="stylish-table">
+        <div className="table-responsive-box">
+          <table className="custom-table fluid-table">
             <thead>
               <tr>
                 <th>Day & Time Slot</th>
@@ -145,7 +157,7 @@ export default function Dashboard() {
                 <th>Assigned Instructor</th>
                 <th>Classroom Venue</th>
                 <th>Student Cohort</th>
-                <th>Validation</th>
+                <th>Validation Status</th>
               </tr>
             </thead>
             <tbody>
@@ -181,7 +193,7 @@ export default function Dashboard() {
             </tbody>
           </table>
         </div>
-      </section>
+      </div>
     </div>
   );
 }

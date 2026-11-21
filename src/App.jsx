@@ -3,9 +3,9 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
-import { TimetableProvider, useTimetable } from './context/TimetableContext';
-import Navbar from './components/Navbar';
+import { TimetableProvider } from './context/TimetableContext';
 import Sidebar from './components/Sidebar';
+import Header from './components/Header';
 
 import Dashboard from './pages/Dashboard';
 import WeeklyMatrix from './pages/WeeklyMatrix';
@@ -15,34 +15,31 @@ import ResourceManagement from './pages/ResourceManagement';
 
 import './App.css';
 
-function MainLayout() {
-  const { isSidebarOpen } = useTimetable();
-
-  return (
-    <div className="app-shell">
-      <Navbar />
-      <div className="app-body">
-        <Sidebar />
-        <main className={`main-viewport ${isSidebarOpen ? 'sidebar-open' : 'sidebar-closed'}`}>
-          <Routes>
-            <Route path="/" element={<Dashboard />} />
-            <Route path="/matrix" element={<WeeklyMatrix />} />
-            <Route path="/builder" element={<ScheduleBuilder />} />
-            <Route path="/conflicts" element={<ConflictReports />} />
-            <Route path="/resources" element={<ResourceManagement />} />
-          </Routes>
-        </main>
-      </div>
-      <ToastContainer position="bottom-right" autoClose={3500} theme="colored" />
-    </div>
-  );
-}
-
 export default function App() {
   return (
     <TimetableProvider>
       <BrowserRouter>
-        <MainLayout />
+        <div className="app-layout">
+          {/* Left-Hand Side Navigation Panel */}
+          <Sidebar />
+
+          {/* Right-Hand Side Main Content Area */}
+          <div className="app-main-viewport">
+            <Header />
+            <main className="content-scroll-area">
+              <Routes>
+                <Route path="/" element={<Dashboard />} />
+                <Route path="/matrix" element={<WeeklyMatrix />} />
+                <Route path="/builder" element={<ScheduleBuilder />} />
+                <Route path="/conflicts" element={<ConflictReports />} />
+                <Route path="/resources" element={<ResourceManagement />} />
+              </Routes>
+            </main>
+          </div>
+
+          {/* Toast Notification Container */}
+          <ToastContainer position="bottom-right" autoClose={3500} theme="dark" />
+        </div>
       </BrowserRouter>
     </TimetableProvider>
   );
