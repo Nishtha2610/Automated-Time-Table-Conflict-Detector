@@ -1,6 +1,7 @@
 @echo off
-title ChronoScheduler - Java Terminal Project
-cd /d "%~dp0backend"
+title SMS - Java Terminal Timetable Conflict Detector
+cd /d "%~dp0"
+if exist "backend" cd /d "%~dp0backend"
 echo ========================================================
 echo  Launching Terminal-Based Timetable Conflict Detector
 echo ========================================================
